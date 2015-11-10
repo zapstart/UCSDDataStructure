@@ -166,7 +166,7 @@ public abstract class Document {
 	public double getFleschScore()
 	{
 	    // TODO: Implement this method
-	    return 0.0;
+	    return 206.835 - 1.015 * (this.getNumWords() / this.getNumSentences()) - 84.6 * (this.getNumSyllables() / this.getNumWords()); 
 	}
 	
 	

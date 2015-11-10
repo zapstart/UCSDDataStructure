@@ -17,7 +17,7 @@ public class DocumentBenchmarking {
 
 	    // Run each test more than once to get bigger numbers and less noise.
 	    // You can try playing around with this number.
-	    int trials = 100;
+	    int trials = 500;
 
 	    // The text to test on
 	    String textfile = "data/warAndPeace.txt";
@@ -40,7 +40,26 @@ public class DocumentBenchmarking {
 		for (int numToCheck = start; numToCheck < numSteps*increment + start; 
 				numToCheck += increment)
 		{
-			// numToCheck holds the number of characters that you should read from the 
+            System.out.print(numToCheck + "\t");
+            String temp = getStringFromFile(textfile, numToCheck);
+            long Start = System.nanoTime();
+		    for (int i = 0; i < trials; i++) {
+                BasicDocument tempBasicDocument = new BasicDocument(temp);
+                tempBasicDocument.getFleschScore();
+            }    
+            long End = System.nanoTime();
+            //long result = End - Start;
+            System.out.print((End - Start) / 1000000000.0 + "\t"); 
+            
+            Start = System.nanoTime();
+		    for (int i = 0; i < trials; i++) {
+                EfficientDocument tempEfficientDocument = new EfficientDocument(temp);
+                tempEfficientDocument.getFleschScore();
+            }    
+		    End = System.nanoTime();
+            System.out.print((End - Start) / 1000000000.0 + "\n"); 
+
+            // numToCheck holds the number of characters that you should read from the 
 			// file to create both a BasicDocument and an EfficientDocument.  
 			
 			/* Each time through this loop you should:
